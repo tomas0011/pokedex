@@ -25,12 +25,12 @@ const getPokemon = async ({ id }) => {
         const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon-form/${id}/`);
         return {
             id: data.id,
-            name: capitalize(data.pokemon.name),
+            name: data.pokemon.name.toUpperCase(),
             frontImage: data.sprites.front_default,
             backImage: data.sprites.back_default,
             types: data.types.map((type) => {
                 return {
-                    name: type.type.name,
+                    name: type.type.name.toUpperCase(),
                     typeDetail: `/pokedex/type/${getIdByUrl(type.type.url)}`
                 }
             }),
