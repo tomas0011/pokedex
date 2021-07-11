@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { capitalize } = require('../../utils');
 
 const getPokedex = async ({ skip, limit }) => {
     const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=${skip}&limit=${limit - skip}`);
@@ -7,14 +8,14 @@ const getPokedex = async ({ skip, limit }) => {
         nextPage: (limit < data.count) ? `/pokedex/all?skip=${limit}&limit=${limit + 30}` : null,
         previousPage: (skip > 0) ? `/pokedex/all?skip=${skip - 30}&limit=${skip}` : null,
         totalPerPage: data.results.length,
-        pokedex: data.results.map((pokemon) => {
-            return {
-                name: pokemon.name,
-                pokemon: getIdByUrl(pokemon.url),
-                pokemonInfo: `/pokemon/${getIdByUrl(pokemon.url)}`
-            }
-        })
+        pokedex: await mapPokemonsDetail(data.results)
     };
+};
+
+const mapPokemonsDetail = (pokemons) => {
+    return Promise.all(pokemons.map(async (pokemon) => {
+        return getPokemon({ id: getIdByUrl(pokemon.url) })
+    }));
 };
 
 const getIdByUrl = url =>  url.split('/')[url.split('/').length - 2];
@@ -24,7 +25,7 @@ const getPokemon = async ({ id }) => {
         const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon-form/${id}/`);
         return {
             id: data.id,
-            name: data.pokemon.name,
+            name: capitalize(data.pokemon.name),
             frontImage: data.sprites.front_default,
             backImage: data.sprites.back_default,
             types: data.types.map((type) => {
