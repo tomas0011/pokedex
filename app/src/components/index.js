@@ -1,5 +1,5 @@
-import { ButtonLoader } from './buttonLoader/buttonLoader';
+import { Loader } from './Loader';
 
 export {
-    ButtonLoader
+    Loader
 }

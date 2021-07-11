@@ -1,0 +1,257 @@
+body {
+    font-family: 'Russo One', sans-serif;
+    background-image: linear-gradient(to bottom,  rgb(0, 177, 0) 50%, rgb(60,105,0) 50%);
+    background-attachment:fixed;
+    background-size: 100% 40px;
+    background-repeat: repeat;
+}
+
+.pokedexModule {
+    display: flex;
+    justify-content: space-evenly
+    ;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 30px;
+    border: 3px black solid;
+    width: 200px;
+}
+
+.trapsInfo {
+    display: flex;
+    flex-direction: column;
+    font-size: larger;
+    font-weight: bolder;
+    color: white;
+    height: 200px;
+}
+
+.trapsInfo div span.traps {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    margin: 10px;
+}
+
+.pokedex {
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.pokemonCard {
+    background-image: linear-gradient(to bottom, rgb(119, 119, 119), #fff, #fff, #fff, #fff, rgb(119, 119, 119));
+    border: 2px black solid;
+    border-radius: 10px;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pokemonCard img {
+    width: 500px;
+    height: auto;
+}
+
+.pokemonList {
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 2px black solid;
+    background-color: yellow;
+    overflow-y: scroll;
+    height: 550px;
+    width: 300px;
+}
+
+.pokemonList::-webkit-scrollbar{
+    width: 10px;
+}
+.pokemonList::-webkit-scrollbar-thumb {
+    background:#000;
+    border:2px solid #000;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,.5);
+}
+
+.pokemonListLoader {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pokemonElement {
+    font-size: 20px;
+    padding: 2px;
+    color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
+}
+
+.pokemonElement span {
+    margin-right: 20px;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.pokemonElement:hover {
+    background-color: #fff;
+    border-radius: 10px;
+    color: #000;
+}
+
+#pokemonElementActive {
+    background-color: #fff;
+    border-radius: 10px;
+    color: #000;
+}
+
+.pokemonElement:active {
+    background-color: rgb(224, 224, 224);
+    border-radius: 10px;
+    color: #000;
+}
+
+.pokemonId {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.elementPokeball {
+    height: 25px;
+    width: 25px;
+    animation: elementPokeball 1s linear infinite;
+}
+
+@keyframes elementPokeball {
+    0% {
+        transform: rotate(0deg);
+    }
+    20% {
+        transform: rotate(30deg);
+    }
+    40% {
+        transform: rotate(0deg);
+    }
+    60% {
+        transform: rotate(-30deg);
+    }
+    80% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.nextPageButton {
+    height: 50px;
+    width: 100%;
+    border: 2px black solid;
+    border-radius: 30px;
+    background-color: orange;
+}
+
+.type {
+    font-weight: bolder;
+    font-size: 20px;
+    -webkit-text-stroke: 1px black;
+    color: white;
+    background-color: white;
+    text-align: center;
+    border: 2px black solid;
+    border-radius: 20px;
+    padding: 3px;
+    width: auto;
+    margin: 2px;
+}
+
+#normal {
+    background-color: gray;
+}
+
+#flying {
+    background-color: LightSeaGreen;
+}
+
+#poison {
+    background-color: violet;
+}
+
+#grass {
+    background-color: green;
+}
+
+#bug {
+    background-color: greenyellow;
+}
+
+#electric {
+    background-color: yellow;
+}
+
+#ground {
+    background-color: olive;
+}
+
+#fire {
+    background-color: red;
+}
+
+#fairy {
+    background-color: pink;
+}
+
+#water {
+    background-color: blue;
+}
+
+#fighting {
+    background-color: brown;
+}
+
+#ice {
+    background-color: cyan;
+}
+
+#steel {
+    background-color: Silver;
+}
+
+#psychic {
+    background-color: HotPink;
+}
+
+#rock {
+    background-color: DarkKhaki;
+}
+
+#dragon {
+    background-color: Indigo;
+}
+
+#dark {
+    background-color: DarkSlateGray;
+}
+
+#ghost {
+    background-color: LightSlateGray;
+}

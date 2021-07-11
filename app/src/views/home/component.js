@@ -1,13 +1,15 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { callService } from "../../utils";
-import { ButtonLoader } from '../../components';
+import { Loader } from '../../components';
 import moment from "moment";
-
+import './component.css';
+const pokeball = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png';
 
 moment.locale("es");
 
 const Home = () => {
     const [pokedexData, setPokedexData] = useState({});
+    const [pokemonCard, setPokemonCard] = useState({});
     const [pokedexLoading, setPokedexLoading] = useState(false);
 
     useEffect(() => {
@@ -17,6 +19,7 @@ const Home = () => {
         })
             .then((response) => {
                 setPokedexData(response)
+                setPokemonCard(response.pokedex[0])
             })
             .catch((err) => {
                 console.info(err)
@@ -48,27 +51,70 @@ const Home = () => {
             });
     };
 
+    const selectPokemon = (pokemon, element) => {
+        if (pokemonCard.target) {
+            pokemonCard.target.id = undefined;
+        }
+        element.target.id = `pokemonElementActive`;
+        setPokemonCard({...pokemon, target: element.target});
+    };
+
     const mapPokedexItems = (pokedex) => {
-        return pokedex.map((pokemon, index) => {
+        return pokedex.map((pokemon) => {
             return (
-                <tr key={index}>
-                    <td className="img"><img src={pokemon.frontImage}/></td>
-                    <td className="pokemonInfo">    
-                        <td className="id">
-                            <span>{`#${pokemon.id}`}</span>
-                        </td>
-                        <td className="name">{pokemon.name}</td>
-                    </td>
-                </tr>
+                <div key={pokemon.id} className="pokemonElement" onClick={(element) => selectPokemon(pokemon, element)}>
+                    <div className="pokemonId">
+                        <img className="elementPokeball" src={pokeball}/>
+                        <span>{`N° ${pokemon.id}`}</span>
+                    </div>
+                    <span className="name">{pokemon.name}</span>
+                </div>
             );
         });
     };
 
     return (
         <Fragment>
-            <h1>Pokedex: Enciclopedex de Tomas</h1>
-            {pokedexData.pokedex && pokedexData.pokedex.length  ? mapPokedexItems(pokedexData.pokedex) : 'empty'}
-            {pokedexLoading ? <ButtonLoader/> : <button onClick={nextPage} disabled={pokedexLoading}>Next page</button>}
+            <div className="pokedexModule">
+                <div className="flex-column">
+                    <h1 className="title">POKEDEX</h1>
+                    <div className="trapsInfo">
+                        <div className="flex-column">
+                            <span className="traps">AVISTADOS:</span>
+                            <span>{pokedexData.total || '???'}</span>
+                        </div>
+                        <div className="flex-column">
+                            <span className="traps">ATRAPADOS:</span>
+                            <span>{pokedexData.total || '???'}</span>
+                        </div>
+                    </div>
+                </div>
+                <div className='pokedex'>
+                    <div className='pokemonCard'>
+                        {pokemonCard.frontImage 
+                        ? <img src={pokemonCard.frontImage}/>
+                        : <div className="pokemonCardLoader">
+                            <Loader/>
+                        </div>}
+                        {pokemonCard.types && pokemonCard.types.map((type) => {
+                            return (<span className="type" id={type.name.toLowerCase()} >{type.name}</span>)
+                        })}
+                    </div>
+                    <div>
+                        <div className='pokemonList'>
+                            {pokedexData.pokedex && pokedexData.pokedex.length 
+                                ? mapPokedexItems(pokedexData.pokedex) 
+                                : <div className="pokemonListLoader">
+                                    <Loader/>
+                                </div>
+                            }
+                        </div>
+                        <button className='nextPageButton' onClick={nextPage} disabled={pokedexLoading}>
+                            {pokedexLoading ? <Loader/> : 'Next page'}
+                        </button>
+                    </div>
+                </div>
+            </div>
         </Fragment>
     );
 };
